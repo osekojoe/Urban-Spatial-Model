@@ -72,4 +72,19 @@ if __name__== '__main__':
 #calculate employment potential map
 
 #%%
-#available space map
+#available space map - from relief map
+# low-lying wetlands (value 1), footslopes (value 2) and hilltops (value 3).
+	# popdens_hill = 15000
+	# popdens_footslope = 20000
+	# popdens_wetland = 50000
+
+relief_1D = relief.flatten()
+
+relief_1D = np.where(relief_1D == 1, 50000, (np.where(relief_1D == 2, 20000, (np.where(relief_1D == 3, 15000, relief_1D)))))
+relief_2D = relief_1D.reshape(175,175)
+Pop_Dens = 0.16 * relief_2D #each cell is 400m by 400m, density was given in 1000m by 1000m 
+
+Available_space = Pop_Dens - pop_2010 # = Max density  minus current density
+
+
+#%%
